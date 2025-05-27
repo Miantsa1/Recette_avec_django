@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="text-center display-3">Liste des produits</h1>
+
+<div class="row">
+    {% for produit in produits %}
+    <div class="col-md-4">
+        <div class="card" style="width: 18rem;">
+            <img src="{{ produit.get_image_url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ produit.nom}}</h5>
+                <p class="card-text">{{ produit.description}}</p>
+                <a href="#" class="btn btn-primary">Voir</a>
+                <a href="{% url 'produits:produitUpdate' produit.id %}" class="btn btn-sm btn-outline-primary">Modifier</a><br><br>
+                <form method="post" action="{% url 'produits:produitDelete' produit.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce produit ?');">
+                        Supprimer
+                    </button>
+                </form>
+            
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
